@@ -101,6 +101,46 @@ resource "kubernetes_deployment" "this" {
             protocol       = "TCP"
           }
 
+          env {
+            name = "AZURE_SUBSCRIPTION_ID"
+            value_from {
+              secret_key_ref {
+                name = element(concat(kubernetes_secret.this.*.metadata.0.name, list("")), 0)
+                key  = "subscription_id"
+              }
+            }
+          }
+
+          env {
+            name = "AZURE_CLIENT_ID"
+            value_from {
+              secret_key_ref {
+                name = element(concat(kubernetes_secret.this.*.metadata.0.name, list("")), 0)
+                key  = "client_id"
+              }
+            }
+          }
+
+          env {
+            name = "AZURE_TENANT_ID"
+            value_from {
+              secret_key_ref {
+                name = element(concat(kubernetes_secret.this.*.metadata.0.name, list("")), 0)
+                key  = "tenant_id"
+              }
+            }
+          }
+
+          env {
+            name = "AZURE_CLIENT_SECRET"
+            value_from {
+              secret_key_ref {
+                name = element(concat(kubernetes_secret.this.*.metadata.0.name, list("")), 0)
+                key  = "client_secret"
+              }
+            }
+          }
+
           resources {
             requests {
               memory = "64Mi"
@@ -117,6 +157,7 @@ resource "kubernetes_deployment" "this" {
   }
 }
 
+
 #####
 # Service
 #####
@@ -128,6 +169,9 @@ resource "kubernetes_service" "this" {
     name      = var.service_name
     namespace = var.namespace
     annotations = merge(
+      {
+        "prometheus.io/scrape" = "true"
+      },
       var.annotations,
       var.service_annotations
     )
@@ -143,7 +187,7 @@ resource "kubernetes_service" "this" {
 
   spec {
     selector = {
-      app = random_string.selector.result
+      app = element(concat(random_string.selector.*.result, list("")), 0)
     }
     type = "ClusterIP"
     port {
@@ -153,6 +197,40 @@ resource "kubernetes_service" "this" {
       name        = "http"
     }
   }
+}
+
+#####
+# Secret
+#####
+
+resource "kubernetes_secret" "this" {
+  count = var.enabled ? 1 : 0
+
+  metadata {
+    name      = var.secret_name
+    namespace = var.namespace
+    annotations = merge(
+      var.annotations,
+      var.secret_annotations
+    )
+    labels = merge(
+      {
+        "app.kubernetes.io/instance" = var.secret_name
+      },
+      local.labels,
+      var.labels,
+      var.secret_labels
+    )
+  }
+
+  data = {
+    client_id       = var.client_id
+    client_secret   = var.client_secret
+    tenant_id       = var.tenant_id
+    subscription_id = var.subscription_id
+  }
+
+  type = "Opaque"
 }
 
 #####
@@ -182,35 +260,4 @@ resource "kubernetes_config_map" "this" {
   data = {
     "configuration.yaml" = yamlencode(local.configuration)
   }
-}
-
-#####
-# Secret
-#####
-
-resource "kubernetes_secret" "this" {
-  count = var.enabled ? 1 : 0
-
-  metadata {
-    name      = var.secret_name
-    namespace = var.namespace
-    annotations = merge(
-      var.annotations,
-      var.secret_annotations
-    )
-    labels = merge(
-      {
-        "app.kubernetes.io/instance" = var.secret_name
-      },
-      local.labels,
-      var.labels,
-      var.secret_labels
-    )
-  }
-
-  data = {
-
-  }
-
-  type = "Opaque"
 }
