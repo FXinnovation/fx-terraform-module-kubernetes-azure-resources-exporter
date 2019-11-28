@@ -28,3 +28,5 @@ See `examples` folders for usage of this module.
 | tenant\_id | Tenant ID that will be used by the snapshot-manager. | string | n/a | yes |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+
+Thanks
