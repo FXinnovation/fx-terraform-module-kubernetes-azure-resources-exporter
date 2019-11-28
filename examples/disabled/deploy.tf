@@ -41,10 +41,12 @@ resource "kubernetes_namespace" "this" {
 module "azure-resources-exporter" {
   source = "../.."
 
-  enabled       = false
-  namespace     = kubernetes_namespace.this.metadata.0.name
-  instance_name = "example"
-  user_name     = "example"
-  password      = "example"
-  configuration = ""
+  enabled   = false
+  namespace = kubernetes_namespace.this.metadata.0.name
+
+  configuration   = ""
+  client_id       = var.client_id
+  client_secret   = var.client_secret
+  subscription_id = var.subscription_id
+  tenant_id       = var.tenant_id
 }
