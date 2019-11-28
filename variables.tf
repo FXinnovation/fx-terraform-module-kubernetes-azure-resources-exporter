@@ -99,21 +99,21 @@ variable "configuration" {
 }
 
 variable "client_id" {
-  description = "Client ID that will be used by the snapshot-manager."
+  description = "Client ID that will be used by the azure-resources-exporter."
   type        = string
 }
 
 variable "client_secret" {
-  description = "Client secret that will be used by the snapshot-manager."
+  description = "Client secret that will be used by the azure-resources-exporter."
   type        = string
 }
 
 variable "tenant_id" {
-  description = "Tenant ID that will be used by the snapshot-manager."
+  description = "Tenant ID that will be used by the azure-resources-exporter."
   type        = string
 }
 
 variable "subscription_id" {
-  description = "Subscription ID that will be used by the snapshot-manager."
+  description = "Subscription ID that will be used by the azure-resources-exporter."
   type        = string
 }
