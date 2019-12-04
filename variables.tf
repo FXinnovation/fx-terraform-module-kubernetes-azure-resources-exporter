@@ -30,7 +30,7 @@ variable "deployment_labels" {
 
 variable "replicas" {
   description = "Number of replicas to deploy."
-  default     = 2
+  default     = 1
 }
 
 variable "image_pull_policy" {
