@@ -3,7 +3,7 @@
 #####
 
 locals {
-  application_version = "0.3.0"
+  application_version = "0.5.0"
   labels = {
     "app.kubernetes.io/name"       = "azure-resources-exporter"
     "app.kubernetes.io/component"  = "exporter"
