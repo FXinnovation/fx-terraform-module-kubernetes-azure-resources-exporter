@@ -89,7 +89,7 @@ resource "kubernetes_deployment" "this" {
           name              = "azure-resources-exporter"
           image             = "fxinnovation/azure-resources-exporter:${local.application_version}"
           image_pull_policy = var.image_pull_policy
-          command           = ["--config.file=/data/configuration.yaml"]
+          command           = ["/opt/azure-resources-exporter/azure-resources-exporter", "--config.file=/data/configuration.yaml"]
 
           volume_mount {
             name       = "configuration-volume"
