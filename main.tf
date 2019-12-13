@@ -11,9 +11,7 @@ locals {
     "app.kubernetes.io/managed-by" = "terraform"
     "app.kubernetes.io/version"    = local.application_version
   }
-  configuration = {
-    configuration = var.configuration
-  }
+  configuration = var.configuration
 }
 
 #####
@@ -62,7 +60,7 @@ resource "kubernetes_deployment" "this" {
       metadata {
         annotations = merge(
           {
-            "configuration/hash" = sha256(local.configuration.configuration)
+            "configuration/hash" = sha256(local.configuration)
           },
           var.annotations,
           var.deployment_annotations
