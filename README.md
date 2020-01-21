@@ -15,7 +15,7 @@ See `examples` folders for usage of this module.
 | config\_map\_annotations | Additionnal annotations that will be merged for the config map. | map | `{}` | no |
 | config\_map\_labels | Additionnal labels that will be merged for the config map. | map | `{}` | no |
 | config\_map\_name | Name of the config map that will be created. | string | `"azure-resources-exporter"` | no |
-| configuration | Configuration to use for azure-resources-exporter (must be a yaml string). | string | n/a | yes |
+| configuration | Configuration to use for azure-resources-exporter \(must be a map\). | map | `{}` | no |
 | deployment\_annotations | Additionnal annotations that will be merged on the deployment. | map | `{}` | no |
 | deployment\_labels | Additionnal labels that will be merged on the deployment. | map | `{}` | no |
 | deployment\_name | Name of the deployment that will be create. | string | `"azure-resources-exporter"` | no |
@@ -38,7 +38,7 @@ See `examples` folders for usage of this module.
 
 | Name | Description |
 |------|-------------|
-| config\_map\_name | Name of the config_map created by this module. |
+| config\_map\_name | Name of the config\_map created by this module. |
 | deployment\_name | Name of the deployment created by this module. |
 | namespace | Namespace in which the module is deployed. |
 | port | Port on which the service listens. |

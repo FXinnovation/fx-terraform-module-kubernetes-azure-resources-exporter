@@ -11,7 +11,6 @@ locals {
     "app.kubernetes.io/managed-by" = "terraform"
     "app.kubernetes.io/version"    = local.application_version
   }
-  configuration = var.configuration
 }
 
 #####
@@ -257,6 +256,6 @@ resource "kubernetes_config_map" "this" {
   }
 
   data = {
-    "configuration.yaml" = yamlencode(local.configuration)
+    "configuration.yaml" = yamlencode(var.configuration)
   }
 }

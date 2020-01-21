@@ -94,8 +94,8 @@ variable "enabled" {
 }
 
 variable "configuration" {
-  description = "Configuration to use for azure-resources-exporter (must be a yaml string)."
-  type        = string
+  description = "Configuration to use for azure-resources-exporter (must be a map)."
+  default     = {}
 }
 
 variable "client_id" {

@@ -42,7 +42,7 @@ module "azure-resources-exporter" {
   source = "../.."
 
   namespace       = kubernetes_namespace.this.metadata.0.name
-  configuration   = file("${path.root}/templates/configuration.yaml")
+  configuration   = yamldecode(file("${path.root}/templates/configuration.yaml"))
   client_id       = var.client_id
   client_secret   = var.client_secret
   subscription_id = var.subscription_id
