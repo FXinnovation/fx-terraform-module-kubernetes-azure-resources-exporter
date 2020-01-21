@@ -59,7 +59,7 @@ resource "kubernetes_deployment" "this" {
       metadata {
         annotations = merge(
           {
-            "configuration/hash" = sha256(local.configuration)
+            "configuration/hash" = sha256(yamlencode(var.configuration))
           },
           var.annotations,
           var.deployment_annotations
